@@ -28,8 +28,11 @@ The following are optional configuration parameters
 `:output: ` : Specify what handler to use for the output of the request.  Currently supported outputs are plain, which will just return the whole document, or YAML and JSON which parse the data and try to look up the key
 
 `:auth: ` : "basic" - set to http basic auth
+
 `:http_user: ` : User name for http basic auth
+
 `:http_passwd: ` : Password for http user 
+
 `:http_connect_timeout: ` : Timeout in seconds for the HTTP connect (default 10)
 
 `:http_read_timeout: ` : Timeout in seconds for waiting for a HTTP response (default 10)
