@@ -1,8 +1,8 @@
 class Hiera
   module Backend
     class Http_backend
-
       def initialize
+        super
         require 'net/http'
         require 'net/https'
         @config = Config[:http]
@@ -40,6 +40,9 @@ class Hiera
           Hiera.debug("[hiera-http]: Lookup #{key} from #{@config[:host]}:#{@config[:port]}#{path}")
           httpreq = Net::HTTP::Get.new(path)
 
+          if @config[:auth] == 'basic'
+            httpreq.basic_auth @config[:http_user], @config[:http_passwd]
+          end 
           begin
             httpres = @http.request(httpreq)
           rescue Exception => e
@@ -115,11 +118,12 @@ class Hiera
         JSON.parse(answer)[key]
       end
 
-      def yaml_handler(answer)
+      # Added key
+      def yaml_handler(key,answer)
+        require 'rubygems'
         require 'yaml'
         YAML.parse(answer)[key]
       end
-
     end
   end
 end
